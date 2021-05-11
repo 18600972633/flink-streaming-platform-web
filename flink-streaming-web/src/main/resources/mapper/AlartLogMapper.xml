@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.flink.streaming.web.mapper.AlartLogMapper">
+<mapper namespace="com.flink.streaming.web.mapper.AlarmLogMapper">
     <resultMap id="BaseResultMap" type="com.flink.streaming.web.model.entity.AlartLog">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="job_config_id" jdbcType="BIGINT" property="jobConfigId"/>
@@ -48,7 +48,7 @@
         <include refid="Base_Column_List"/>
 
         from alart_log
-        where is_deleted=0
+        where is_deleted=0 and  create_time>=DATE_SUB(CURDATE(), INTERVAL 30 DAY)
         <if test="jobConfigId!= null">
             and job_config_id = #{jobConfigId,jdbcType=BIGINT}
         </if>
